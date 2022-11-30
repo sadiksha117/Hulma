@@ -4,29 +4,35 @@ import React from 'react';
 import NumericInput from "react-native-numeric-input";
 import Colors from '../color';
 
-function SingleProductScreen() {
+function SingleProductScreen({route}) {
     const[value, setValue] = useState(0);
+    const navigation =useNavigation()
+    const product = route.params;
     return (
         <Box safeArea flex={1} bg={Colors.white}>
             <ScrollView px={5} showsVerticalScrollIndicator={false}>
-                <Image source={require("../../assets/images/3.png")} 
+                <Image source={{uri:product.image}} 
                 alt="Image"
                 w="full" 
                 h={300} 
                 resizeMode="contain"
                  />
                  <Heading  bold fontSize={15} mb={2} lineHeight={22}>
-                    New adidas Shoes 
+                     {product.name}
                  </Heading>
+                    <Rating value={product.rating} text={'${product.numReviews} reviews'} />
 
                     <HStack space={2} alignItems="center" my={5}>
+                        {
+                        product.countInStock> > 0 ?(
+                        
                         <NumericInput 
                         value={value} 
                         totalWidth={140}
                          totalHeight={30}
                          iconSize={25}
                          step={1}
-                         maxValue={50}
+                         maxValue={product.countInStock}
                          minValue={0}
                          borderColor={Colors.deepgray}
                          rounded
@@ -35,14 +41,22 @@ function SingleProductScreen() {
                          rightButtonBackgroundColor={Colors.main}
                          leftButtonBackgroundColor={Colors.main}
                          />
+                             ) : (
+                                 <Heading bold color={Colors.red} italic fontSize={19}>
+                            Out of stock </Heading>
+                            )}
+                                 
                          <Spacer/>
-                         <Heading bold color={Colors.black} fontSize={19}>
-                            $400</Heading>
+                           
+                         
+                         <Heading bold color={Colors.black}  fontSize={19}>
+                            ${product.price} </Heading>
                     </HStack>
                  <Text lineHeight={24} fontSize={12}>
-                    hkhsdlhkjdkkkkkkkjjhkhk
+                     {product.description}
                  </Text>
-                 <Buttone bg={Colors.main} color={Colors.white}>
+                 <Buttone onPress={() => navigation.navigate("Cart")}
+                    bg={Colors.main} color={Colors.white}>
                 ADD TO CART
                  </Buttone>
                  {/*REVIEW*/}cd ..
