@@ -6,6 +6,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 
 
 function HomeSearch() {
+    const navigation= useNavigation()
     return(
         <HStack
          space={3}
